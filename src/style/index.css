@@ -1,0 +1,10 @@
+
+.empty img{
+    display:block;
+    height: 80px;
+    margin: 0 auto;
+}
+
+.empty p{
+    line-height:1em;
+}

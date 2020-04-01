@@ -1,0 +1,13 @@
+$namespace: 'el';
+
+@mixin b($block) {
+    $B: $namespace + '-' + $block !global;
+    .#{$B} {
+        @content;
+    }
+}
+
+@include b(yc) {
+    color: red;
+    
+}
