@@ -1,5 +1,13 @@
 <template>
-    <Icon name="iconguanlishitu" />
+    <div>
+        <Icon name="iconguanlishitu" />
+        <yc-link href="https://element.eleme.io" target="_blank">默认链接</yc-link><br>
+        <yc-link type="primary">主要链接</yc-link> <br>
+        <yc-link type="success">成功链接</yc-link><br>
+        <yc-link type="warning">警告链接</yc-link><br>
+        <yc-link type="danger">危险链接</yc-link><br>
+        <yc-link type="info">信息链接</yc-link>
+    </div>
 </template>
 
 <script>

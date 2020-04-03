@@ -7,9 +7,11 @@ import '@/style/scss.scss'
 
 
 import Icon from './components/icon.vue';
+import Link from './components/link.vue';
+
 
 Vue.component(Icon.name, Icon)
-
+Vue.component(Link.name, Link)
 
 Vue.use(ElementUI);
 
