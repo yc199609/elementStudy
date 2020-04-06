@@ -10,6 +10,51 @@ $--color-white: #FFFFFF !default;
 $--color-text-regular: #606266 !default;
 $--color-text-placeholder: #C0C4CC !default;
 
+$--border-radius-base: 4px !default;
+
+@function selectorToString($selector) {
+    $selector: inspect($selector);
+    $selector: str-slice($selector, 2, -2);
+    @return $selector;
+}
+  
+@function containsModifier($selector) {
+    $selector: selectorToString($selector);
+  
+    @if str-index($selector, '--') {
+        @return true;
+    } @else {
+        @return false;
+    }
+}
+  
+@function containWhenFlag($selector) {
+    $selector: selectorToString($selector);
+  
+    @if str-index($selector, '.' + 'is-') {
+        @return true
+    } @else {
+        @return false
+    }
+}
+  
+@function containPseudoClass($selector) {
+    $selector: selectorToString($selector);
+  
+    @if str-index($selector, ':') {
+        @return true
+    } @else {
+        @return false
+    }
+}
+  
+@function hitAllSpecialNestRule($selector) {
+    @return containsModifier($selector) or containWhenFlag($selector) or containPseudoClass($selector);
+}
+  
+
+
+//   块（block）
 @mixin b($block) {
     $B: $namespace + '-' + $block !global;
     .#{$B} {
@@ -21,6 +66,45 @@ $--color-text-placeholder: #C0C4CC !default;
     @at-root {
         &.#{'is-' + $state} {
             @content;
+        }
+    }
+}
+
+// 修饰符（modifier）
+@mixin m($modifier) {
+    $currentSelector: "";
+    @each $unit in $modifier {
+        $currentSelector: #{$currentSelector + & + "--" + $unit + ","};
+    }
+
+    @at-root {
+        #{$currentSelector} {
+            @content;
+        }
+    }
+}
+// 元素（element）
+@mixin e($element) {
+    $E: $element !global;
+    $selector: &;
+    $currentSelector: "";
+    @each $unit in $element {
+        $currentSelector: #{$currentSelector + "." + $B + "__" + $unit + ","};
+    }
+  
+    @if hitAllSpecialNestRule($selector) {
+        @at-root {
+            #{$selector} {
+                #{$currentSelector} {
+                    @content;
+                }
+            }
+        }
+    } @else {
+        @at-root {
+            #{$currentSelector} {
+                @content;
+            }
         }
     }
 }

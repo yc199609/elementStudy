@@ -10,6 +10,9 @@
   "dependencies": {
     "core-js": "^3.6.4",
     "element-ui": "^2.13.0",
+    "node-sass": "^4.13.1",
+    "resize-observer-polyfill": "^1.5.1",
+    "sass-loader": "7",
     "sass-resources-loader": "^2.0.1",
     "vue": "^2.6.11"
   },

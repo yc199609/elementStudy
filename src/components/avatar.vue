@@ -33,6 +33,22 @@ export default {
             isImageExist: true
         }
     },
+    computed: {
+        avatarClass() {
+            const { size, icon, shape } = this;
+            let classList = ['yc-avatar'];
+            if(size && typeof size === 'string') {
+                classList.push(`yc-avatar--${size}`);
+            }
+            if(icon) {
+                classList.push('yc-avatar--icon');
+            }
+            if(shape) {
+                classList.push(`yc-avatar--${shape}`);
+            }
+            return classList.join(' ');
+        }
+    },
     methods:{
         handleError() {
             const { error } = this;
@@ -77,3 +93,57 @@ export default {
     }
 }
 </script>
+<style lang="scss" scoped>
+@include b(avatar) {
+    display: inline-block;
+    box-sizing: border-box;
+    text-align: center;
+    overflow: hidden;
+    color: #fff;
+    background: #C0C4CC;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 14px;
+
+    >img {
+        display: block;
+        height: 100%;
+    }
+    
+    @include m(circle) {
+        border-radius: 50%;
+    }
+
+    @include m (square) {
+        border-radius: $--border-radius-base;
+    }
+
+    @include m (icon){
+        font-size: 18px;
+    }
+
+    @include m (large) {
+        $--avatar-large-size: 40px;
+        width: $--avatar-large-size;
+        height: $--avatar-large-size;
+        line-height: $--avatar-large-size;
+    }
+
+    @include m (medium) {
+        $--avatar-medium-size: 36px;
+        width: $--avatar-medium-size;
+        height: $--avatar-medium-size;
+        line-height: $--avatar-medium-size;
+    }
+
+    @include m (small) {
+        $--avatar-small-size: 28px;
+        width: $--avatar-small-size;
+        height: $--avatar-small-size;
+        line-height: $--avatar-small-size;
+    }
+}
+
+
+</style>
