@@ -1,9 +1,9 @@
 <template>
-    <div>
-        <el-scrollbar native style="height:40px;">
+    <div class="yu">
+        <yc-scrollbar style="height:60px;">
             <Icon name="iconguanlishitu" />
             <example/>
-        </el-scrollbar>
+        </yc-scrollbar>
     </div>
 </template>
 
@@ -62,4 +62,9 @@ export default {
     a {
         color: #42b983;
     }
+</style>
+<style lang="scss" scoped>
+/deep/ .yc-scrollbar__wrap{
+    overflow-x: hidden !important;
+}
 </style>

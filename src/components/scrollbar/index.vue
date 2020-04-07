@@ -1,10 +1,12 @@
 <script>
-// import { addResizeListener, removeResizeListener } from 'src/utils/resize-event.js';
+import { addResizeListener, removeResizeListener } from '@/utils/resize-event.js';
 import scrollbarWidth from './scrollbar-width';
 import { toObject } from '@/utils/util';
+import Bar from './bar';
 
 export default {
     name: 'YcScrollbar',
+    components: { Bar },
     props: {
         native: Boolean,
         wrapStyle: {},
@@ -67,7 +69,16 @@ export default {
 
         // eslint-disable-next-line no-empty
         if(!this.native) {
-
+            nodes = ([
+                wrap,
+                <Bar
+                    move={ this.moveX }
+                    size={ this.sizeWidth } />,
+                <Bar
+                    vertical
+                    move={ this.moveY }
+                    size={ this.sizeHeight } />
+            ]);
         } else {
             nodes = ([
                 <div
@@ -83,13 +94,27 @@ export default {
             const wrap = this.wrap;
             this.moveY = ((wrap.scrollTop * 100) / wrap.clientHeight);
             this.moveX = ((wrap.scrollLeft * 100) / wrap.clientWidth);
+        },
+        update() {
+            let heightPercentage, widthPercentage;
+            const wrap = this.wrap;
+            if (!wrap) return;
+
+            heightPercentage = (wrap.clientHeight * 100 / wrap.scrollHeight);
+            widthPercentage = (wrap.clientWidth * 100 / wrap.scrollWidth);
+
+            this.sizeHeight = (heightPercentage < 100) ? (heightPercentage + '%') : '';
+            this.sizeWidth = (widthPercentage < 100) ? (widthPercentage + '%') : '';
         }
     },
     mounted() {
         if (this.native) return;
+        this.$nextTick(this.update);
+        !this.noresize && addResizeListener(this.$refs.resize, this.update);
     },
     beforeDestroy() {
         if (this.native) return;
+        !this.noresize && removeResizeListener(this.$refs.resize, this.update);
     }
 }
 </script>
@@ -101,7 +126,7 @@ export default {
     &:hover,
     &:active,
     &:focus {
-        >.yc-scrollbar__bar {
+        > .yc-scrollbar__bar {
             opacity: 1;
             transition: opacity 340ms ease-out;
         }
@@ -116,49 +141,6 @@ export default {
             &::-webkit-scrollbar {
                 width: 0;
                 height: 0;
-            }
-        }
-    }
-
-    @include e(thumb) {
-        position: relative;
-        display: block;
-        width: 0;
-        height: 0;
-        cursor: pointer;
-        border-radius: inherit;
-        background-color: rgba(#909399, .3);
-        transition: .3s background-color;
-
-        &:hover {
-            background-color: rgba(#909399, .5);
-        }
-    }
-
-    @include e(bar) {
-        position: absolute;
-        right: 2px;
-        bottom: 2px;
-        z-index: 1;
-        border-radius: 4px;
-        opacity: 0;
-        transition: opacity 120ms ease-out;
-
-        @include when(vertical) {
-            width: 6px;
-            top: 2px;
-
-            > div {
-                width: 100%;
-            }
-        }
-
-        @include when(horizontal) {
-            height: 6px;
-            left: 2px;
-
-            > div {
-                height: 100%;
             }
         }
     }
