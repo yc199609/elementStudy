@@ -8,7 +8,7 @@
 
 <script>
 import HelloWorld from './components/HelloWorld.vue'
-import { addResizeListener } from './utils/resize-event';
+// import { addResizeListener } from './utils/resize-event';
 
 export default {
     name: 'App',
@@ -16,7 +16,10 @@ export default {
         HelloWorld
     },
     mounted() {
-        addResizeListener(document.body,this.handleResize)
+        console.log(this.$yc)
+        this.$yc()
+
+        // addResizeListener(document.body,this.handleResize)
     },
     methods:{
         handleResize(e){

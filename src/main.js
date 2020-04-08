@@ -9,6 +9,8 @@ import Icon from './components/icon.vue';
 import Link from './components/link.vue';
 import Avatar from './components/avatar.vue'
 import Scrollbar from './components/scrollbar/index.vue'
+import Message from './components/alert/index';
+
 Vue.use(ElementUI);
 
 
@@ -16,6 +18,8 @@ Vue.component(Icon.name, Icon)
 Vue.component(Link.name, Link)
 Vue.component(Avatar.name, Avatar)
 Vue.component(Scrollbar.name, Scrollbar)
+
+Vue.prototype.$yc = Message;
 
 Vue.config.productionTip = false
 

@@ -61,7 +61,7 @@ export default {
                 ref="wrap"
                 style = { style }
                 onScroll = { this.handleScroll }
-                class={[this.wrapClass,'yc-scrollbar__wrap', gutter ? '' : 'yc-scrollbar__wrap--hidden-default']}
+                class={ [this.wrapClass,'yc-scrollbar__wrap', gutter ? '' : 'yc-scrollbar__wrap--hidden-default'] }
             >{ [view] }</div>
         );
 
